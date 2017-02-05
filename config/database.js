@@ -1,3 +1,3 @@
 module.exports = {
-	'url'	: 'mongodb://localhost:27017/sfl_chat'
-}
+	'url'	: 'mongodb://xxx:xxxxxxxxx@novus.modulusmongo.net:27017/yM5oryta'
+};
