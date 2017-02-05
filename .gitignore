@@ -1,0 +1,5 @@
+.idea
+nbproject
+node_modules
+Public/libs
+logs.txt
