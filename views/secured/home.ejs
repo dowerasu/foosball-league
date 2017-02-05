@@ -1,0 +1,58 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <title>SFL</title>
+        <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body ng-controller="mainController">
+        <header>
+            <input type="hidden" id="user-id" value="<%= user._id %>" />
+            <label class="switch">
+                <input type="checkbox" ng-model="players[0].status" ng-change="togglePlayerStatus(0, players[0]._id)" ng-checked="players[0].status">
+                <div class="slider round"></div>
+            </label>
+            <label class="switch">
+                <input type="checkbox" ng-model="players[1].status" ng-change="togglePlayerStatus(1, players[1]._id)" ng-checked="players[1].status">
+                <div class="slider round"></div>
+            </label>
+            <label class="switch">
+                <input type="checkbox" ng-model="players[2].status" ng-change="togglePlayerStatus(2, players[2]._id)" ng-checked="players[2].status">
+                <div class="slider round"></div>
+            </label>
+            <label class="switch">
+                <input type="checkbox" ng-model="players[3].status" ng-change="togglePlayerStatus(3, players[3]._id)" ng-checked="players[3].status">
+                <div class="slider round"></div>
+            </label>
+        </header>
+        <div id="content">
+            <div class="container-fluid wrapper">
+                <div class="row-fluid columns content">
+                    <div class="container-fluid">
+                        <div class="row message-bubble" ng-repeat="message in messages">
+                            <p class="text-muted">{{message.user.local.username}}</p>
+                            <span>{{ message.message}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="message">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="sendMessage(message)">Send</button>
+                </span>
+            </div>
+        </footer>
+        <script src="libs/socket-io-client/socket.io.js"></script>
+        <script src="libs/angularjs/angular.js"></script>
+        <script src="libs/angular-route/angular-route.js"></script>
+        <script src="libs/angular-socket-io/socket.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/services/SocketFactory.js"></script>
+        <script src="js/controllers/mainController.js"></script>
+    </body>
+</html>
