@@ -2,6 +2,8 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding-top:80px;
+  word-wrap:break-word;
 }
 #content {
   width: 100%;

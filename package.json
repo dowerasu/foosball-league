@@ -23,5 +23,11 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "~1.0.0",
     "socket.io": "latest"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^2.2.0",
+    "grunt-contrib-uglify": "^3.0.1"
   }
 }
