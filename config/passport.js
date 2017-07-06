@@ -84,7 +84,8 @@ module.exports = function (passport) {
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
     callbackURL: configAuth.facebookAuth.callbackURL,
-    passReqToCallback: true
+    passReqToCallback : true,
+    profileFields: ['id', 'emails', 'name']
   },
       function (req, accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
@@ -131,7 +132,7 @@ module.exports = function (passport) {
 
             user.save(function (err) {
               if (err)
-                throw err
+                throw err;
               return done(null, user);
             });
           }

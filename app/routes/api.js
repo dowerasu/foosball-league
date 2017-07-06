@@ -14,4 +14,4 @@ module.exports = function (router, passport) {
     res.json({SecretData: 'abc123'});
   });
 
-}
+};
