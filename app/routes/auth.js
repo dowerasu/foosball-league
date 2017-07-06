@@ -44,6 +44,7 @@ module.exports = function (router, passport) {
   });
 
   router.get('/logout', function (req, res) {
+    res.clearCookie('userid');
     req.logout();
     res.redirect('/');
   });

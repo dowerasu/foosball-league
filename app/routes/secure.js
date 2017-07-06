@@ -8,6 +8,7 @@ module.exports = function (router, passport) {
   });
 
   router.get('/profile', function (req, res) {
+    res.cookie('userid', req.user._id, { maxAge: 2592000000 });
     res.render('secured/profile.ejs', {user: req.user});
   });
 
