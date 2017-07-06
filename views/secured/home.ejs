@@ -13,18 +13,22 @@
             <label class="switch">
                 <input type="checkbox" ng-model="players[0].status" ng-change="togglePlayerStatus(0, players[0]._id)" ng-checked="players[0].status">
                 <div class="slider round"></div>
+                <span class="username">{{ players[0].status ? players[0].user.local.username : '' }}</span>
             </label>
             <label class="switch">
                 <input type="checkbox" ng-model="players[1].status" ng-change="togglePlayerStatus(1, players[1]._id)" ng-checked="players[1].status">
                 <div class="slider round"></div>
+                <span class="username">{{ players[1].status ? players[1].user.local.username : '' }}</span>
             </label>
             <label class="switch">
                 <input type="checkbox" ng-model="players[2].status" ng-change="togglePlayerStatus(2, players[2]._id)" ng-checked="players[2].status">
                 <div class="slider round"></div>
+                <span class="username">{{ players[2].status ? players[2].user.local.username : '' }}</span>
             </label>
             <label class="switch">
                 <input type="checkbox" ng-model="players[3].status" ng-change="togglePlayerStatus(3, players[3]._id)" ng-checked="players[3].status">
                 <div class="slider round"></div>
+                <span class="username">{{ players[3].status ? players[3].user.local.username : '' }}</span>
             </label>
         </header>
         <div id="content">

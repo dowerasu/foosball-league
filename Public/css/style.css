@@ -1,40 +1,41 @@
 body {
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-    #content {
-        width: 100%;
-        overflow-y: scroll;
-        padding: 0px 10% !important;
-    }
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#content {
+  width: 100%;
+  overflow-y: scroll;
+  padding: 0px 10% !important;
+}
 
 
 html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 header {
-    width: 100%;
-    min-height: 60px;
-    top: 0;
+  width: 100%;
+  min-height: 60px;
+  top: 0;
+  margin: 1em;
 }
 
 footer {
-    width: 100%;
-    min-height: 60px;
-    bottom: 0;
+  width: 100%;
+  min-height: 60px;
+  bottom: 0;
 }
 
 header .form-group {
-	display: inline-block;
-	margin-bottom: 0;
+  display: inline-block;
+  margin-bottom: 0;
 }
 
 header .form-group label {
-	display: inline;
+  display: inline;
 }
 
 .switch {
@@ -42,6 +43,8 @@ header .form-group label {
   display: inline-block;
   width: 60px;
   height: 34px;
+  line-height: 100px;
+  margin-right: 50px;
 }
 
 /* Hide default HTML checkbox */

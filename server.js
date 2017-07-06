@@ -87,7 +87,7 @@ io.on('connection', function (socket) {
     if (data.playerIndex < 0 || data.playerIndex > 3) {
       return console.error('Invalid player index: ' + data.playerIndex);
     }
-    
+
     User.findById(data.userId, function (err, user) {
       Player.findOneAndUpdate({'_id': data.playerId}, {'user': user, 'status': data.status}, {upsert: true}, function (err, doc) {
         if (err)
@@ -95,7 +95,7 @@ io.on('connection', function (socket) {
       });
 
       io.emit('statusChange', {'user': user, playerIndex: data.playerIndex, status: data.status});
-    });    
+    });
   });
 
   socket.on('disconnect', function () {
