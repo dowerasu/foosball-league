@@ -44,7 +44,7 @@ module.exports = function (router, passport) {
   });
 
   router.get('/logout', function (req, res) {
-    res.clearCookie('userid');
+    res.clearCookie('SFL.userid');
     req.logout();
     res.redirect('/');
   });

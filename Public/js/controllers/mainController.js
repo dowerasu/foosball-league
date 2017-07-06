@@ -23,10 +23,6 @@ myApp.controller('mainController', ['$scope', 'Socket', function ($scope, Socket
         }
       }
 
-      if (readyToPlay) {
-        notifyMe('GO GO GO');
-      }
-
       return readyToPlay;
     };
 
@@ -40,7 +36,10 @@ myApp.controller('mainController', ['$scope', 'Socket', function ($scope, Socket
 
     Socket.on('players', function (data) {
       $scope.players = data;
-      checkReadyStatus();
+      if (checkReadyStatus()) {
+        notifyMe('GO GO GO');
+        Socket.emit('readyToPlay', {});
+      }
     });
 
     $scope.messages = [];
@@ -64,14 +63,22 @@ myApp.controller('mainController', ['$scope', 'Socket', function ($scope, Socket
       var status = false;
       if ($scope.players[playerIndex].status) {
         status = true;
+      } else if ($scope.players[playerIndex].user._id !== userId) {
+        status = true;
       }
       Socket.emit('statusChange', {'playerIndex': playerIndex, 'userId': userId, 'playerId': playerId, 'status': status});
     };
 
     Socket.on('statusChange', function (data) {
       $scope.players[data.playerIndex].status = data.status;
-      if (data.user._id !== userId) {
-        checkReadyStatus();
+      var readyToPlay = checkReadyStatus();
+      
+      if (readyToPlay)  {
+        Socket.emit('readyToPlay', {});
+      }
+     
+      if (data.user._id !== userId && readyToPlay) {
+        notifyMe('GO GO GO');
       }
     });
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
-var port = process.env.PORT || 9001;
+var serverConfig = require('./config/server');
+var port = process.env.PORT || serverConfig.port;
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -10,6 +11,11 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
 var MongoStore = require('connect-mongo')(session);
+
+var CronJob = require('cron').CronJob;
+new CronJob('* * * * * *', function () {
+//  console.log('You will see this message every second');
+}, null, true, 'America/Los_Angeles');
 
 //sockets stuff
 var http = require('http').Server(app);
@@ -21,14 +27,15 @@ require('./config/passport')(passport);
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(morgan('dev'));
+app.use(morgan(serverConfig.env));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(session({secret: 'anystringoftext',
+app.use(session({
+  secret: serverConfig.secret,
   saveUninitialized: true,
   resave: true,
   store: new MongoStore({mongooseConnection: mongoose.connection,
-    ttl: 2 * 24 * 60 * 60})}));
+    ttl: serverConfig.ttl})}));
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -52,6 +59,8 @@ var User = require('./app/models/user');
 var Message = require('./app/models/message');
 var Player = require('./app/models/player');
 
+var currentPlayers = null;
+
 io.on('connection', function (socket) {
 
   Message.find(function (err, messages) {
@@ -60,8 +69,14 @@ io.on('connection', function (socket) {
     io.emit('messages', messages);
   });
   Player.find(function (err, players) {
-    if (err)
+    if (err) {
       return console.error(err);
+    }
+
+    if (currentPlayers !== null) {
+//      players = currentPlayers;
+    }
+    
     io.emit('players', players);
   });
 
@@ -88,6 +103,8 @@ io.on('connection', function (socket) {
       return console.error('Invalid player index: ' + data.playerIndex);
     }
 
+    //@todo: compare userId with session data
+
     User.findById(data.userId, function (err, user) {
       Player.findOneAndUpdate({'_id': data.playerId}, {'user': user, 'status': data.status}, {upsert: true}, function (err, doc) {
         if (err)
@@ -96,6 +113,13 @@ io.on('connection', function (socket) {
 
       io.emit('statusChange', {'user': user, playerIndex: data.playerIndex, status: data.status});
     });
+  });
+
+  socket.on('readyToPlay', function () {
+    setTimeout(function () {
+      currentPlayers = [];
+//      io.emit('players', currentPlayers);
+    }, serverConfig.gameSessionTime);
   });
 
   socket.on('disconnect', function () {
