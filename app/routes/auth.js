@@ -5,28 +5,6 @@ module.exports = function (router, passport) {
     res.render('index.ejs');
   });
 
-  //localhost:8080/auth/login
-  router.get('/login', function (req, res) {
-    res.render('auth/login.ejs', {message: req.flash('loginMessage')});
-  });
-  router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
-
-  //localhost:8080/auth/signup
-  router.get('/signup', function (req, res) {
-    res.render('auth/signup.ejs', {message: req.flash('signupMessage')});
-  });
-
-
-  router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/',
-    failureRedirect: '/signup',
-    failureFlash: true
-  }));
-
   router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
   router.get('/facebook/callback',
@@ -42,16 +20,6 @@ module.exports = function (router, passport) {
   router.get('/connect/facebook', passport.authorize('facebook', {scope: 'email'}));
   router.get('/connect/google', passport.authorize('google', {scope: ['profile', 'email']}));
 
-  router.get('/connect/local', function (req, res) {
-    res.render('auth/connect-local.ejs', {message: req.flash('signupMessage')});
-  });
-
-  router.post('/connect/local', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/connect/local',
-    failureFlash: true
-  }));
-
   router.get('/unlink/facebook', function (req, res) {
     var user = req.user;
 
@@ -62,20 +30,6 @@ module.exports = function (router, passport) {
         throw err;
       res.redirect('/profile');
     });
-  });
-
-  router.get('/unlink/local', function (req, res) {
-    var user = req.user;
-
-    user.local.username = null;
-    user.local.password = null;
-
-    user.save(function (err) {
-      if (err)
-        throw err;
-      res.redirect('/profile');
-    });
-
   });
 
   router.get('/unlink/google', function (req, res) {

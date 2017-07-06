@@ -24,9 +24,9 @@ header {
 }
 
 footer {
-  width: 100%;
   min-height: 60px;
   bottom: 0;
+  margin: 1em;
 }
 
 header .form-group {
@@ -96,4 +96,9 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+footer .actions {
+  margin: 1em;
+  text-align: center;
 }
