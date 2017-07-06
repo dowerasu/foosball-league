@@ -45,7 +45,7 @@
         </div>
         <footer>
             <div class="input-group">
-                <input type="text" class="form-control" ng-model="message">
+                <input type="text" class="form-control" ng-model="message" ng-keydown="$event.keyCode === 13 && sendMessage(message)">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" ng-click="sendMessage(message)">Send</button>
                 </span>
